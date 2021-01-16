@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PersonService {
     List<PersonEntity> findAll();
+
+    void save(PersonEntity person);
 }

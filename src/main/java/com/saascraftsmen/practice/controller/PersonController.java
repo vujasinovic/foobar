@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -27,5 +29,21 @@ public class PersonController {
         model.addAttribute(PERSONS_ATTR_NAME, persons);
 
         return PERSONS_PAGE;
+    }
+
+    @GetMapping(value = "/newPerson")
+    public String getNewPerson(Model model) {
+        PersonEntity person = new PersonEntity();
+
+        model.addAttribute("person", person);
+
+        return "newPerson";
+    }
+
+    @PostMapping(value = "/newPerson")
+    public String postNewPerson(@ModelAttribute("person") PersonEntity person) {
+        personService.save(person);
+
+        return "redirect:/persons";
     }
 }
